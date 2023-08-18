@@ -65,9 +65,10 @@ def refresh_project_list():
     if 'project_list' in st.session_state:
         del st.session_state.project_list
     dirs = [entry.path for entry in os.scandir('projects') if entry.is_dir()]
-    #replace "projects\\" with " 
+    #replace "projects\\" in windows or "projects/" in mac with ""
     for i in range(len(dirs)):
-        dirs[i]=dirs[i].replace("projects\\","")
+        head_tail = os.path.split(dirs[i])
+        dirs[i]=head_tail[1]
     st.session_state.project_list = dirs
     if(len(dirs)>0):
         st.session_state.project=dirs[0]
